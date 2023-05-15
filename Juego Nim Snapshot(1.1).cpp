@@ -47,8 +47,9 @@ bool game_finished(bool lost, bool tablas){
 			
 		}
 			bool check_lost(int monton1, int monton2, int monton3){
-				
-				return ((monton1 == 0 && monton2 == 0 && monton3 == 1) || (monton1 == 0 && monton2 == 1 && monton3 == 0) || (monton1 == 1 && monton2 == 0 && monton3 == 0));
+				bool verificar;
+				verificar = ((monton1 == 0 && monton2 == 0 && monton3 == 1) || (monton1 == 0 && monton2 == 1 && monton3 == 0) || (monton1 == 1 && monton2 == 0 && monton3 == 0));
+				return verificar;
 			}
 				
 				
@@ -184,7 +185,7 @@ bool game_finished(bool lost, bool tablas){
 									
 									
 									
-									// imprime el tablero y limpia la pantalla después de cada turno de jugador
+									// imprime el tablero y limpia la pantalla despuÃ©s de cada turno de jugador
 									imprimir_tablero(monton1, monton2, monton3, jugador1, jugador2, punteo_jugador_uno, punteo_jugador_dos);
 									
 									while(!player_one_turn && !juego_terminado){
@@ -263,7 +264,7 @@ bool game_finished(bool lost, bool tablas){
 			cout<< "1. Juego Nuevo" << endl;
 			cout<< "2. creditos" << endl;
 			cout<< "3. Salir" << endl;
-			cout<< "Elija una opción del menú" << endl;
+			cout<< "Elija una opciÃ³n del menÃº" << endl;
 			cin>> seleccion_usuario;
 			switch(seleccion_usuario){
 				case 1:
