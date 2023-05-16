@@ -15,7 +15,7 @@ bool game_finished(bool lost, bool tablas){
 	}
 }
 	
-	void trasition_screen(bool perder, bool tie, bool turno1, string jugador1, string jugador2){
+	bool trasition_screen(bool perder, bool tie, bool turno1, string jugador1, string jugador2){
 		
 		
 		int temp;
@@ -30,9 +30,18 @@ bool game_finished(bool lost, bool tablas){
 		}else if(tie){
 			cout << "EMPATE" << endl;
 		}
-		cout << "ingrese cualquier numero para continuar"<< endl;
+		cout << "Para seguir jugando ingrese el numero 1 o ingrese cualquier otro para terminar la partida"<< endl;
 		cin >> temp;
+		
+		system("CLS");
+		if(temp == 1){
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
+	
 		bool empate(int monton1, int monton2, int monton3, int linea, int cantidad){
 			
 			if(linea == 3 && monton1 == 0 && monton2 == 0 && monton3 == 0){
@@ -101,7 +110,7 @@ bool game_finished(bool lost, bool tablas){
 								
 								int monton1 = 3, monton2 = 5, monton3 = 7, punteo_jugador_uno = 0, punteo_jugador_dos = 0;
 								string jugador1, jugador2;
-								bool juego_terminado = false, player_one_turn, perder = false, check_tie = false;
+								bool juego_terminado = false, player_one_turn, perder = false, check_tie = false, seguir_jugando = true;
 								
 								cout<< "Ingrese el nombre del PRIMER jugador" << endl;
 								cin>> jugador1;	
@@ -109,7 +118,7 @@ bool game_finished(bool lost, bool tablas){
 								cin>> jugador2;
 								
 								
-								while(true){
+								while(seguir_jugando){
 									
 									imprimir_tablero(monton1, monton2, monton3, jugador1, jugador2, punteo_jugador_uno, punteo_jugador_dos);
 									player_one_turn = true;
@@ -135,11 +144,11 @@ bool game_finished(bool lost, bool tablas){
 											player_one_turn = false;
 											if(perder){
 												punteo_jugador_uno += 3;
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}else if(check_tie){
 												punteo_jugador_dos++;
 												punteo_jugador_uno++;
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}
 										}else if(linea_selecta == 2 && cantidad_retirar <= monton2){
 											
@@ -151,11 +160,11 @@ bool game_finished(bool lost, bool tablas){
 											if(perder){
 												punteo_jugador_uno += 3;
 												
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}else if(check_tie){
 												punteo_jugador_dos++;
 												punteo_jugador_uno++;
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}
 										}else if(linea_selecta == 3 && cantidad_retirar <= monton3){
 											
@@ -166,11 +175,11 @@ bool game_finished(bool lost, bool tablas){
 											player_one_turn = false;
 											if(perder){
 												punteo_jugador_uno += 3;
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}else if(check_tie){
 												punteo_jugador_dos++;
 												punteo_jugador_uno++;
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}
 										}else{
 											cout << "Movimiento invalido" << endl;
@@ -186,7 +195,10 @@ bool game_finished(bool lost, bool tablas){
 									
 									
 									// imprime el tablero y limpia la pantalla después de cada turno de jugador
-									imprimir_tablero(monton1, monton2, monton3, jugador1, jugador2, punteo_jugador_uno, punteo_jugador_dos);
+									if(seguir_jugando){
+										imprimir_tablero(monton1, monton2, monton3, jugador1, jugador2, punteo_jugador_uno, punteo_jugador_dos);	
+									}
+									
 									
 									while(!player_one_turn && !juego_terminado){
 										int linea_selecta, cantidad_retirar;
@@ -209,11 +221,11 @@ bool game_finished(bool lost, bool tablas){
 											player_one_turn = true;
 											if(perder){
 												punteo_jugador_dos += 3;
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}else if(check_tie){
 												punteo_jugador_dos++;
 												punteo_jugador_uno++;
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}
 										}else if(linea_selecta == 2 && cantidad_retirar <= monton2){
 											monton2 = monton2 - cantidad_retirar;
@@ -222,11 +234,11 @@ bool game_finished(bool lost, bool tablas){
 											player_one_turn = true;
 											if(perder){
 												punteo_jugador_dos += 3;
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}else if(check_tie){
 												punteo_jugador_dos++;
 												punteo_jugador_uno++;
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}
 										}else if(linea_selecta == 3 && cantidad_retirar <= monton3){
 											monton3 = monton3 - cantidad_retirar;
@@ -235,11 +247,11 @@ bool game_finished(bool lost, bool tablas){
 											player_one_turn = true;
 											if(perder){
 												punteo_jugador_dos = 3;
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}else if(check_tie){
 												punteo_jugador_dos++;
 												punteo_jugador_uno++;
-												trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
+												seguir_jugando = trasition_screen(perder, check_tie, player_one_turn, jugador1, jugador2);
 											}
 										}else{
 											cout << "Movimiento invalido" << endl;
@@ -254,37 +266,36 @@ bool game_finished(bool lost, bool tablas){
 								}
 							}
 								
-	int main(){
-		bool stay_on_menu = true;
-		int seleccion_usuario = 0;
-		string jugador1, jugador2;
+								int main(){
+									bool stay_on_menu = true;
+									int seleccion_usuario = 0;
+									string jugador1, jugador2;
 									
-		while(stay_on_menu){
-			cout<< "Bienvenido" << endl;
-			cout<< "1. Juego Nuevo" << endl;
-			cout<< "2. creditos" << endl;
-			cout<< "3. Salir" << endl;
-			cout<< "Elija una opción del menú" << endl;
-			cin>> seleccion_usuario;
-			switch(seleccion_usuario){
-				case 1:
-					cout<< endl;
-					jugar();
-					cout<< endl;
-					// system("CLS");
-					break;
-				case 2:
-					cout<< endl;
-					imprimir_creditos();
-					cout<< endl;
-					break;
-				case 3:
-					cout<< endl;
-					cout<< "Adios" << endl;
-					stay_on_menu = false;
-					break;
-			}
-		}
-	return 0;
-	}
-
+									while(stay_on_menu){
+										cout<< "Bienvenido" << endl;
+										cout<< "1. Juego Nuevo" << endl;
+										cout<< "2. creditos" << endl;
+										cout<< "3. Salir" << endl;
+										cout<< "Elija una opción del menú" << endl;
+										cin>> seleccion_usuario;
+										switch(seleccion_usuario){
+										case 1:
+											cout<< endl;
+											jugar();
+											cout<< endl;
+											// system("CLS");
+											break;
+										case 2:
+											cout<< endl;
+											imprimir_creditos();
+											cout<< endl;
+											break;
+										case 3:
+											cout<< endl;
+											cout<< "Adios" << endl;
+											stay_on_menu = false;
+											break;
+										}
+									}
+									return 0;
+								}
